@@ -31,13 +31,13 @@
 
 // Если пользователь не вводит новых точек и тире в течение этого времени в мс,
 // то декодировать и отправить символ
-#define SEND_INTERVAL 1000
+#define SEND_INTERVAL 500
 
 // Длина точкив мс, всё что длиннее будет считаться тире
 #define DOT_LENGTH 200
 
 // Если была тишина в течение интервала, то в начале ставим пробел перед следующей буквой
-#define SPACE_INTERVAL 5000
+#define SPACE_INTERVAL 2000
 
 // Способ переключения раскладок
 // 1 Ctrl + Shift
@@ -224,47 +224,147 @@ void loop() {
           code_found = 1;
           no_space_required = 1;
         }
-#ifdef MAC_LAYOUT
-        if(!strcmp(code, "......")) {
-          if(english_layout) {
+        // Английский совпадает для мака и ПК
+        if(english_layout) {
+          if(!strcmp(code, ".-.-.-")) { // .
             Keyboard.press('.');
           }
-          else {
+          if(!strcmp(code, "--..--")) { // ,
+            Keyboard.press(',');
+          }
+          if(!strcmp(code, "---...")) { // :
             Keyboard.press(KEY_LEFT_SHIFT);
-            Keyboard.press('7');
+            Keyboard.press(';');
+          }
+          if(!strcmp(code, "-.-.-.")) { // ;
+            Keyboard.press(';');
+          }
+          if(!strcmp(code, ".----.")) { // '
+            Keyboard.press('\'');
+          }
+          if(!strcmp(code, ".-..-.")) { // "
+            Keyboard.press(KEY_LEFT_SHIFT);
+            Keyboard.press('"');
+          }
+          if(!strcmp(code, "-....-")) { // -
+            Keyboard.press('-');
+          }
+          if(!strcmp(code, "-..-.")) { // /
+            Keyboard.press('/');
+          }
+          if(!strcmp(code, "..--.-")) { // _
+            Keyboard.press('_');
+          }
+          if(!strcmp(code, "..--..")) { // ?
+            Keyboard.press(KEY_LEFT_SHIFT);
+            Keyboard.press('/');
+          }
+          if(!strcmp(code, "-.-.--")) { // !
+            Keyboard.press(KEY_LEFT_SHIFT);
+            Keyboard.press('1');
+          }
+          if(!strcmp(code, ".-.-.")) { // +
+            Keyboard.press(KEY_LEFT_SHIFT);
+            Keyboard.press('=');
+          }
+          if(!strcmp(code, ".--.-.")) { // @
+            Keyboard.press(KEY_LEFT_SHIFT);
+            Keyboard.press('2');
           }
           Keyboard.releaseAll();
         }
-        if(!strcmp(code, ".-.-.-")) {
-          if(english_layout) {
-            Keyboard.press(',');
+#ifdef MAC_LAYOUT
+        else {
+          if(!strcmp(code, "......")) { // .
+            Keyboard.press(KEY_LEFT_SHIFT);
+            Keyboard.press('7');
           }
-          else {
+          if(!strcmp(code, ".-.-.-")) { // ,
             Keyboard.press(KEY_LEFT_SHIFT);
             Keyboard.press('6');
+          }
+          if(!strcmp(code, "---...")) { // :
+            Keyboard.press(KEY_LEFT_SHIFT);
+            Keyboard.press('5');
+          }
+          if(!strcmp(code, "-.-.-.")) { // ;
+            Keyboard.press(KEY_LEFT_SHIFT);
+            Keyboard.press('8');
+          }
+          if(!strcmp(code, ".-..-.")) { // "
+            Keyboard.press(KEY_LEFT_SHIFT);
+            Keyboard.press('2');
+          }
+          if(!strcmp(code, "-....-")) { // -
+            Keyboard.press('-');
+          }
+          if(!strcmp(code, "-..-.")) { // /
+            Keyboard.press('/');
+          }
+          if(!strcmp(code, "..--.-")) { // _
+            Keyboard.press(KEY_LEFT_SHIFT);
+            Keyboard.press('-');
+          }
+          if(!strcmp(code, "..--..")) { // ?
+            Keyboard.press(KEY_LEFT_SHIFT);
+            Keyboard.press('/');
+          }
+          if(!strcmp(code, "--..--")) { // !
+            Keyboard.press(KEY_LEFT_SHIFT);
+            Keyboard.press('1');
+          }
+          if(!strcmp(code, ".-.-.")) { // +
+            Keyboard.press(KEY_LEFT_SHIFT);
+            Keyboard.press('=');
           }
           Keyboard.releaseAll();
         }
 #else
-        if(!strcmp(code, "......")) {
-          if(english_layout) {
-            Keyboard.press('.');
-          }
-          else {
+        else {
+          if(!strcmp(code, "......")) {
             Keyboard.press('/');
           }
-          Keyboard.releaseAll();
-        }
-        if(!strcmp(code, ".-.-.-")) {
-          if(english_layout) {
-            Keyboard.press(',');
-          }
-          else {
+          if(!strcmp(code, ".-.-.-")) {
             Keyboard.press(KEY_LEFT_SHIFT);
             Keyboard.press('?');
           }
-          Keyboard.releaseAll();
-        }
+          if(!strcmp(code, "---...")) {
+            Keyboard.press(KEY_LEFT_SHIFT);
+            Keyboard.press('6');
+          }
+          if(!strcmp(code, "-.-.-.")) {
+            Keyboard.press(KEY_LEFT_SHIFT);
+            Keyboard.press('4');
+          }
+          if(!strcmp(code, ".-..-.")) {
+            Keyboard.press(KEY_LEFT_SHIFT);
+            Keyboard.press('2');
+          }
+          if(!strcmp(code, "-....-")) {
+            Keyboard.press('-');
+          }
+          if(!strcmp(code, "-..-.")) {
+            Keyboard.press(KEY_LEFT_SHIFT);
+            Keyboard.press('\\');
+          }
+          if(!strcmp(code, "..--.-")) {
+            Keyboard.press(KEY_LEFT_SHIFT);
+            Keyboard.press('-');
+          }
+          if(!strcmp(code, "..--..")) {
+            Keyboard.press(KEY_LEFT_SHIFT);
+            Keyboard.press('7');
+          }
+          if(!strcmp(code, "--..--")) {
+            Keyboard.press(KEY_LEFT_SHIFT);
+            Keyboard.press('1');
+          }
+          if(!strcmp(code, ".-.-.")) {
+            Keyboard.press(KEY_LEFT_SHIFT);
+            Keyboard.press('=');
+          }
+        Keyboard.releaseAll();
+      }
 #endif
       }
       is_symbol_sent = 1;

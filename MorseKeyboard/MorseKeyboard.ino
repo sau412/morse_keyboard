@@ -55,7 +55,7 @@
 // Первая буква после точки - большая
 #define CAPITAL_AFTER_DOT 1
 
-char *morseCode[] = {
+const char *morseCode[] = {
   ".-",    // А
   "-...",  // Б
   ".--",   // В
